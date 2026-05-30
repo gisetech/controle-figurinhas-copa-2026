@@ -1,0 +1,6 @@
+{
+  "name": "Álbum de Figurinhas",
+  "description": "Controle visual completo e interativo do seu álbum de figurinhas, organizado com grupos de A a L, FWC e CC.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo } from "react";
 import { StickerState } from "./types";
-import { GROUPS, generateInitialStickers } from "./initialData";
+import { GROUPS, generateInitialStickers, FLAGS } from "./initialData";
 import { StatsDashboard } from "./components/StatsDashboard";
 import { StickerGrid } from "./components/StickerGrid";
 import { SharePanel } from "./components/SharePanel";
@@ -262,7 +262,10 @@ export default function App() {
                         : "bg-white border-purple-100 hover:bg-purple-50 hover:text-slate-800 text-slate-600"
                     }`}
                   >
-                    <span>{c.name}</span>
+                    <span className="flex items-center gap-1">
+                      <span>{FLAGS[c.code] || "🌍"}</span>
+                      <span>{c.name}</span>
+                    </span>
                     <span className={`text-[9px] font-mono rounded px-1 ${
                       isSelected ? "bg-white/30 text-white" : "bg-purple-50 text-slate-500 font-semibold"
                     }`}>

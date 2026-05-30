@@ -1,6 +1,7 @@
 import React from "react";
 import { StickerState, Country } from "../types";
 import { Check } from "lucide-react";
+import { FLAGS } from "../initialData";
 
 interface StickerGridProps {
   country: Country;
@@ -66,18 +67,40 @@ export const StickerGrid: React.FC<StickerGridProps> = ({
   // Swatch colors from the user prompt reference
   const paletteColors = ["#FFE5B4", "#DD969C", "#C8A2C8", "#E0B0FF"];
 
+  const isCompleted = ownedCount === totalCount && totalCount > 0;
+
   return (
-    <div className="bg-white border border-purple-100 rounded-3xl overflow-hidden shadow-sm shadow-purple-50 transition-all duration-300 hover:shadow-md hover:border-purple-200">
+    <div className={`rounded-3xl overflow-hidden shadow-sm transition-all duration-300 border ${
+      isCompleted 
+        ? "bg-[#FCFBEF]/40 border-amber-300 shadow-md shadow-amber-100/30 ring-1 ring-amber-350/10" 
+        : "bg-white border-purple-100 shadow-purple-50 hover:shadow-md hover:border-purple-200"
+    }`}>
       {/* Country Header banner */}
-      <div className="px-5 py-3.5 bg-[#FAF8FC] flex items-center justify-between border-b border-purple-100/60">
+      <div className={`px-5 py-3.5 flex items-center justify-between border-b ${
+        isCompleted ? "bg-amber-50/40 border-amber-200/55" : "bg-[#FAF8FC] border-purple-100/60"
+      }`}>
         <div>
-          <div className="flex items-center gap-2">
-            <span className="font-display font-extrabold text-xs tracking-wider uppercase text-slate-800">
-              {country.name}
-            </span>
-            <span className="text-[9px] bg-purple-50 text-[#C8A2C8] px-2 py-0.5 rounded font-mono font-bold border border-purple-100/50">
-              {country.code === "FWC_INI" ? "FWC INÍCIO" : country.code === "FWC_HIST" ? "FWC HISTÓRIA" : country.code}
-            </span>
+          <div className="flex flex-col gap-1">
+            <div className="flex items-center gap-2">
+              <span className="text-base leading-none select-none">
+                {FLAGS[country.code] || "🌍"}
+              </span>
+              <span className="font-display font-extrabold text-xs tracking-wider uppercase text-slate-800">
+                {country.name}
+              </span>
+              <span className={`text-[9px] px-2 py-0.5 rounded font-mono font-bold ${
+                isCompleted 
+                  ? "bg-amber-100 text-amber-800 border border-amber-200/50" 
+                  : "bg-purple-50 text-[#C8A2C8] border border-purple-100/50"
+              }`}>
+                {country.code === "FWC_INI" ? "FWC INÍCIO" : country.code === "FWC_HIST" ? "FWC HISTÓRIA" : country.code}
+              </span>
+              {isCompleted && (
+                <span className="text-[8px] bg-emerald-100 text-emerald-800 px-1.5 py-0.5 rounded-full font-extrabold uppercase tracking-wider animate-pulse flex items-center gap-0.5 border border-emerald-200/50">
+                  ★ COMPLETO
+                </span>
+              )}
+            </div>
           </div>
           <p className="text-[9px] uppercase tracking-wider text-slate-400 mt-1 font-bold">
             {ownedCount} de {totalCount} Figuras ({percent.toFixed(0)}%)
